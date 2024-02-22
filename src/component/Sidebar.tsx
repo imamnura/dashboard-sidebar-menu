@@ -8,6 +8,7 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
 import { IoMdMore } from "react-icons/io";
 import { FaRegUser } from "react-icons/fa";
+import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -84,17 +85,14 @@ export default function Sidebar() {
         </div>
 
         <div className={`border-t flex items-center p-2 gap-2`}>
-          {!open && <FaRegUser size={20} />}
           <div
-            className={`flex items-center text-sm gap-4 rounded-md hover:bg-[#1e1e1e] capitalize ${
-              !open && "hidden"
-            }`}
+            className={`flex items-center text-sm gap-4 rounded-md hover:bg-[#1e1e1e] capitalize h-[37px]`}
           >
-            <div className="leading-4">
+            <div className={`leading-4 ${!open && "hidden"}`}>
               <h4 className="text-sm font-semibold">John Doe</h4>
               <span className="text-xs text-gray-600">johndoe@gmail.com</span>
             </div>
-            <IoMdMore size={20} className="cursor-pointer" />
+            <RiLogoutBoxLine size={24} />
           </div>
         </div>
       </nav>
