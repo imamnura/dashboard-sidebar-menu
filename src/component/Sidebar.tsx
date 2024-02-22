@@ -1,85 +1,104 @@
-import { useState } from "react";
-import IconBxMenu from "../assets/icons/Menu";
-import IconBxMenuAltRight from "../assets/icons/Menu-Right";
-import IconBxSearch from "../assets/icons/Search";
-import IconBxGridAlt from "../assets/icons/Grid";
+import React, { useState } from "react";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { HiOutlineMenu } from "react-icons/hi";
+import { MdOutlineDashboard } from "react-icons/md";
+import { RiSettings4Line } from "react-icons/ri";
+import { TbReportAnalytics } from "react-icons/tb";
+import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+import { FiMessageSquare, FiFolder, FiShoppingCart } from "react-icons/fi";
+import { IoMdMore } from "react-icons/io";
+import { FaRegUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(true);
 
+  const menu = [
+    { name: "dashboard", link: "/", icon: MdOutlineDashboard },
+    { name: "user", link: "/", icon: AiOutlineUser },
+    { name: "messages", link: "/", icon: FiMessageSquare },
+    { name: "analytics", link: "/", icon: TbReportAnalytics },
+    { name: "File Manager", link: "/", icon: FiFolder },
+    { name: "Cart", link: "/", icon: FiShoppingCart },
+    { name: "Saved", link: "/", icon: AiOutlineHeart },
+    { name: "Setting", link: "/", icon: RiSettings4Line },
+  ];
+
   return (
-    <div
-      className={`fixed left-0 top-0 h-full ${
-        open ? "w-[250px]" : "w-[78px]"
-      } bg-[#11101D] px-[14px] py-[6px] z-[-1] [transition:all_0.5s_ease]`}
-    >
-      <div className="h-[60px] flex items-center justify-between relative">
-        <div
-          className={`text-white text-xl font-semibold [transition:all_0.5s_ease] ${
-            open ? "block" : "hidden"
-          }`}
-        >
-          Menu
+    <aside className="flex gap-4">
+      <nav
+        className={`bg-[#0e0e0e] flex h-screen flex-col justify-between gap-6 border-b py-6 ${
+          open ? "w-48" : "w-16"
+        } duration-500 text-gray-100 px-4`}
+      >
+        <div className="pt-2 flex justify-between items-center gap-2">
+          <img
+            src="https://img.logoipsum.com/243.svg"
+            className={`${open ? "w-32" : "hidden"}`}
+            alt=""
+          />
+          <button className={`p-1.5 rounded-lg duration-500`}>
+            {open ? (
+              <HiMenuAlt3
+                size={26}
+                className="cursor-pointer"
+                onClick={() => setOpen(!open)}
+              />
+            ) : (
+              <HiOutlineMenu
+                size={26}
+                className="cursor-pointer"
+                onClick={() => setOpen(!open)}
+              />
+            )}
+          </button>
         </div>
-        {open ? (
-          <IconBxMenuAltRight
-            className="absolute top-2/4 right-0 -translate-y-1/2 text-[22px] text-center cursor-pointer [transition:all_0.5s_ease] text-white h-[60px] min-w-[50px] leading-[60px]"
-            onClick={() => setOpen(!open)}
-          />
-        ) : (
-          <IconBxMenu
-            className="absolute top-2/4 right-0 -translate-y-1/2 text-[22px] text-center cursor-pointer [transition:all_0.5s_ease] text-white h-[60px] min-w-[50px] leading-[60px]"
-            onClick={() => setOpen(!open)}
-          />
-        )}
-      </div>
-      <div>
-        <ul className="mt-[20px] h-full">
-          <li className="relative mx-0 my-2 [list-style:none]">
-            <IconBxSearch
-              className={`absolute top-2/4 left-[0] -translate-y-1/2 text-[22px] bg-[#1d1b31] text-[#fff] h-[50px] leading-[50px] text-center min-w-[50px] not-italic [font-variant:normal] inline-block normal-case antialiased `}
-            />
-            <input
-              type="text"
-              placeholder="Search"
-              className={`text-[15px] text-white font-normal outline-0 h-[50px] w-full border-none rounded-xl [transition:all_0.5s_ease] bg-[#1d1b31] hover:pl-[50px] hover:pr-[20px] hover:py-[0] ${
-                open && "pl-[50px] pr-[20px] py-[0] w-full"
-              }`}
-            />
-            <span
-              className={`absolute -top-[20px] left-[calc(100% + 15px)] bg-[#fff] [box-shadow:0_5px_10px_rgba(0,_0,_0,_0.3)] px-[12px] py-[6px] rounded-[4px] text-[15px] font-normal opacity-0 whitespace-nowrap pointer-events-none [transition:0s] hover:opacity-100 hover:pointer-events-auto hover:[transition:all_0.4s_ease] hover:top-2/4 hover:-translate-y-1/2 ${
-                open ? "hidden" : "block"
-              }`}
-            >
-              Tootlip Search
-            </span>
-          </li>
-          <li className="relative mx-0 my-2 [list-style:none] hover:text-yellow-300">
-            <a
-              href="#"
-              className="flex h-full w-full rounded-xl items-center no-underline transition-all duration-150 ease-linear bg-[#11101D]  hover:[transition:all_0.5s_ease] hover:text-yellow-300 hover:bg-white"
-            >
-              <IconBxGridAlt className="text-white h-[50px] leading-[50px] text-xl rounded-xl min-w-[50px] hover:[transition:all_0.5s_ease] hover:text-yellow-300" />
-              <span
-                className={`text-white text-[15px] font-normal whitespace-nowrap opacity-0 pointer-events-none [transition:0.4s] ${
-                  open
-                    ? "opacity-100 cursor-pointer"
-                    : "opacity-0 pointer-events-none delay-150"
-                } hover:[transition:all_0.5s_ease] hover:text-yellow-300`}
+
+        <div className="relative scroll-auto">
+          <div className="flex flex-col justify-center gap-4">
+            {menu?.map((item, i) => (
+              <Link
+                to={item.link}
+                key={i}
+                className={`group flex text-sm gap-4 p-2 ps-0 rounded-md hover:bg-[#1e1e1e] capitalize`}
               >
-                Dashboard
-              </span>
-            </a>
-            {/* <span
-              className={`absolute -top-[20px] left-[calc(100% + 15px)] bg-[#fff] [box-shadow:0_5px_10px_rgba(0,_0,_0,_0.3)] px-[12px] py-[6px] rounded-[4px] text-[15px] font-normal opacity-0 whitespace-nowrap pointer-events-none [transition:0s] hover:opacity-100 hover:pointer-events-auto hover:[transition:all_0.4s_ease] hover:top-2/4 hover:-translate-y-1/2 ${
-                open ? "hidden" : "block"
-              }`}
-            >
-              Tooltip Dashboard
-            </span> */}
-          </li>
-        </ul>
-      </div>
-    </div>
+                <div>{React.createElement(item?.icon, { size: "20" })}</div>
+                <h2
+                  style={{ transitionDelay: `${i + 1}00ms` }}
+                  className={`whitespace-pre duration-500 ${
+                    !open && "opacity-0 translate-x-28 overflow-hidden"
+                  }`}
+                >
+                  {item?.name}
+                </h2>
+                <h2
+                  className={`${
+                    open && "hidden"
+                  } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-14 group-hover:duration-300 group-hover:w-fit `}
+                >
+                  {item?.name}
+                </h2>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className={`border-t flex items-center p-2 gap-2`}>
+          {!open && <FaRegUser size={20} />}
+          <div
+            className={`flex items-center text-sm gap-4 rounded-md hover:bg-[#1e1e1e] capitalize ${
+              !open && "hidden"
+            }`}
+          >
+            <div className="leading-4">
+              <h4 className="text-sm font-semibold">John Doe</h4>
+              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
+            </div>
+            <IoMdMore size={20} className="cursor-pointer" />
+          </div>
+        </div>
+      </nav>
+      <div className="m-3 text-xl text-gray-900 font-semibold">Dashboard</div>
+    </aside>
   );
 }
